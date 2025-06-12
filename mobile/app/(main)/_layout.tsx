@@ -39,7 +39,7 @@ export default function MainLayout() {
         }}
       >
         <Tabs.Screen
-          name="index"
+          name="Home"
           options={{
             tabBarLabel: "Home",
             tabBarIcon: ({ color, size }) => (
@@ -67,6 +67,18 @@ export default function MainLayout() {
         />
         <Tabs.Screen
           name="DishDetail"
+          options={{
+            href: null
+          }}
+        />
+        <Tabs.Screen
+          name="NewAddress"
+          options={{
+            href: null
+          }}
+        />
+        <Tabs.Screen
+          name="About"
           options={{
             href: null
           }}

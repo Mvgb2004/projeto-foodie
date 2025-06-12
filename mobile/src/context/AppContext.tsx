@@ -1,14 +1,10 @@
 import React, { createContext, useContext, useState } from "react";
+import { Dish } from "../service/get-dishes";
 
-type CartItem = {
-  id: number;
-  name: string;
-  image: string;
-};
 
 type CartContextType = {
-  cartItems: CartItem[];
-  addToCart: (dish: CartItem) => void;
+  cartItems: Dish[];
+  addToCart: (dish: Dish) => void;
   removeFromCart: (id: number) => void;
 };
 
@@ -19,11 +15,11 @@ const CartContext = createContext<CartContextType>({
 });
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
+  children
 }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<Dish[]>([]);
 
-  const addToCart = (dish: CartItem) => {
+  const addToCart = (dish: Dish) => {
     setCartItems((prev) => [...prev, dish]);
   };
 

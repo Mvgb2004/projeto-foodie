@@ -3,29 +3,13 @@ import { ActivityIndicator } from "react-native";
 import { DishDetailScreen } from "../../src/screens/DishDetailScreen";
 
 const DishDetail = () => {
-  const { id, image, name } = useLocalSearchParams<{
-    id: string;
-    image: string;
-    name: string;
-  }>();
+  const { dish } = useLocalSearchParams<{ dish: string }>();
 
-  if (!id || !image || !name) {
-    return <ActivityIndicator color={"FF0000"}/>
+  if (!dish) {
+    return <ActivityIndicator color="#FF0000" />;
   }
 
-  return (
-    <DishDetailScreen
-      route={{
-        params: {
-          dish: {
-            id: Number(id),
-            image,
-            name,
-          },
-        },
-      }}
-    />
-  );
+  return <DishDetailScreen />;
 };
 
 export default DishDetail;

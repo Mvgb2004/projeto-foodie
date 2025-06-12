@@ -1,7 +1,7 @@
 import express, { type Request, type Response, type Express } from "express";
 import cors from "cors";
 import authRoutes from "../modules/auth/routes/auth-routes";
-
+import dishesRoutes from "../modules/dishes/routes/dishes-routes";
 
 const setupRoutes = (app: Express) => {
   app.use(express.json());
@@ -14,6 +14,7 @@ const setupRoutes = (app: Express) => {
   });
 
   apiRouter.use("/auth", authRoutes);
+  apiRouter.use("/dishes", dishesRoutes);
 
   app.use("/api/v1", apiRouter);
 };
