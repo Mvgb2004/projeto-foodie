@@ -1,26 +1,17 @@
-import { Image, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MainContainer from "../components/MainContainer";
 import { useCart } from "../context/AppContext";
+import { Dish } from "../service/get-dishes";
 
-type DishDetailScreenProps = {
-  route: {
-    params: {
-      dish: {
-        id: number;
-        image: string;
-        name: string;
-      };
-    };
-  };
-};
-
-export function DishDetailScreen({ route }: DishDetailScreenProps) {
-  const { dish } = route.params;
+export function DishDetailScreen() {
   const { addToCart } = useCart();
+  const params = useLocalSearchParams();
+  const dish: Dish = JSON.parse(params.dish as string);
 
   return (
     <MainContainer>
-      <Image 
+      <Image
         source={require("../../assets/images/logo.png")}
         style={{
           width: 100,
@@ -33,11 +24,13 @@ export function DishDetailScreen({ route }: DishDetailScreenProps) {
         }}
       />
       <View style={styles.container}>
-        <Image source={dish.image as ImageSourcePropType} style={styles.image} />
+        <Image
+          source={require("../../assets/images/talher.png")}
+          style={styles.image}
+        />
         <Text style={styles.name}>{dish.name}</Text>
-        <Text style={styles.description}>
-          Descrição do prato e ingredientes.
-        </Text>
+        <Text style={styles.description}>{dish.description}</Text>
+        <Text style={styles.price}>R$ {dish.price.toFixed(2)}</Text>
         <TouchableOpacity style={styles.button} onPress={() => addToCart(dish)}>
           <Text style={styles.buttonText}>Adicionar ao Carrinho</Text>
         </TouchableOpacity>
@@ -53,6 +46,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
   },
+  price: {
+  fontSize: 18,
+  fontWeight: "600",
+  marginBottom: 16,
+  color: "#333",
+},
   image: { width: "100%", height: 200, borderRadius: 12, marginBottom: 16 },
   name: { fontSize: 24, fontWeight: "bold", marginBottom: 8 },
   description: {

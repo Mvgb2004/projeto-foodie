@@ -8,9 +8,29 @@ import {
   View,
 } from "react-native";
 import MainContainer from "../components/MainContainer";
+import { useState } from "react";
+import { useRegisterForm } from "../store/useRegisterStore";
 
-export function RegisterScreen() {
-  const router = useRouter()
+
+export default function RegisterScreen() {
+  const router = useRouter();
+  const update = useRegisterForm((state) => state.update);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleNext = () => {
+    if (password !== confirmPassword) {
+      alert("As senhas não coincidem");
+      return;
+    }
+
+    update({ name, email, password });
+    router.push("/Address");
+  };
+
   return (
     <MainContainer>
       <View style={styles.container}>
@@ -24,28 +44,43 @@ export function RegisterScreen() {
           }}
         />
         <Text style={styles.title}>Criar Conta</Text>
-        <TextInput style={styles.input} placeholder="Nome completo" />
+        <TextInput
+          style={styles.input}
+          placeholder="Nome completo"
+          value={name}
+          onChangeText={setName}
+        />
         <TextInput
           style={styles.input}
           placeholder="Email"
           keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
         />
-        <TextInput style={styles.input} placeholder="Senha" secureTextEntry />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
         <TextInput
           style={styles.input}
           placeholder="Confirme a senha"
           secureTextEntry
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
         />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => router.push("Address")}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleNext}>
           <Text style={styles.buttonText}>Avançar</Text>
         </TouchableOpacity>
       </View>
     </MainContainer>
   );
 }
+
+// ... estilos iguais
+
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: "#fff" },

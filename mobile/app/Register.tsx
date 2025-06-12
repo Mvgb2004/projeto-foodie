@@ -1,4 +1,4 @@
-import { RegisterScreen } from "../src/screens/RegisterScreen";
+import  RegisterScreen  from "../src/screens/RegisterScreen";
 
 const Register = () => {
   return (<RegisterScreen />);
